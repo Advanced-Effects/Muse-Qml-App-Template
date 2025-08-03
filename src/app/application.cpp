@@ -61,17 +61,15 @@ QQuickWindow *loadApplicationAndCreateWindow(QQmlApplicationEngine &engine) {
     return qobject_cast<QQuickWindow *>(rootUiElement);
 }
 
-int Application::exec(QCoreApplication& app, CommandLineParser& parser) {
+int Application::exec(
+        QCoreApplication& app,
+        CommandLineParser& parser,
+        QQmlApplicationEngine& engine) {
     app_init_qrc();
-
-    // Creates application engine which will load the application UI
-    QQmlApplicationEngine engine;
-    engine.addImportPath(":/");
-
+    // Initialize C++ QML types BEFORE loading the window!
     initalizeModules();
 
     QQuickWindow *window = loadApplicationAndCreateWindow(engine);
-
     if (!window) return EXIT_FAILURE;
 
     // Then show it

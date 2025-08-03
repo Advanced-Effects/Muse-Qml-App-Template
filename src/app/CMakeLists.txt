@@ -81,6 +81,7 @@ set(LINK_LIB
     muse::diagnostics
     muse::audioplugins
 
+    app::context
     app::appshell
 )
 

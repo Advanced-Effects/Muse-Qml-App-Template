@@ -137,7 +137,7 @@ if (MUSE_ENABLE_UNIT_TESTS)
     message(STATUS "Enabled testing")
 endif()
 
-add_subdirectory(${MUSE_FRAMEWORK_SRC_PATH} ${MUSE_FRAMEWORK_PATH})
+add_subdirectory(${MUSE_FRAMEWORK_SRC_PATH})
 add_subdirectory(src)
 
 if (MSVC)

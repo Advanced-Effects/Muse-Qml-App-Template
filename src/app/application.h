@@ -17,7 +17,10 @@ public:
 
     void addModule(muse::modularity::IModuleSetup* module);
 
-    int exec(QCoreApplication& app, CommandLineParser& parser);
+    int exec(
+        QCoreApplication& app,
+        CommandLineParser& parser,
+        QQmlApplicationEngine& engine);
 
 private:
     QList<muse::modularity::IModuleSetup*> _modules;
