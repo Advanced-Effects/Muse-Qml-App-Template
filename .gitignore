@@ -61,3 +61,6 @@ cmake-build-*
 
 # debug information files
 *.dwo
+
+# IDE files
+*~
