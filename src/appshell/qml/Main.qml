@@ -13,7 +13,7 @@ AppWindow {
         }
     }
 
-    AppTitleBar {
+    /*AppTitlebar {
         id: appTitleBar
 
         anchors.top: parent.top
@@ -34,15 +34,15 @@ AppWindow {
         onCloseWindowRequested: {
             root.close()
         }
-    }
+    }*/
 
     WindowContent {
         id: window
 
-        anchors.top: appTitleBar.bottom
+        anchors.top: /*appTitlebar*/parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        anchorsbottom: parent.bottom
+        anchors.bottom: parent.bottom
     }
 }
 

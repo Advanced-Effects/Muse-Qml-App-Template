@@ -1,7 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/Main.qml</file>
-        <file>qml/AppWindow.qml</file>
         <file>qml/WindowContent.qml</file>
+        <file>qml/AppWindow.qml</file>
+        <file>qml/TitleBar/AppTitlebar.qml</file>
+        <file>qml/TitleBar/AppMenuBar.qml</file>
+        <file>qml/TitleBar/AppSystemButtons.qml</file>
+        <file>qml/TitleBar/AppButtonBackground.qml</file>
     </qresource>
 </RCC>

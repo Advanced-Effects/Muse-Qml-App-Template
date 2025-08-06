@@ -21,4 +21,9 @@ ApplicationWindow {
     signal showWindowMinimizedRequested()
     signal toggleWindowMaximizedRequested()
     signal closeWindowRequested()
+
+    Item {
+        id: windowContentItem
+        anchors.fill: parent
+    }
 }
