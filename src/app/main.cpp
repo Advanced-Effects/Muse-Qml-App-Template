@@ -8,6 +8,7 @@
 #include "commandlineparser.h"
 
 // Modules
+#include "global/globalmodule.h"
 #include "actions/actionsmodule.h"
 #include "context/contextmodule.h"
 #include "ui/uimodule.h"
@@ -27,6 +28,7 @@ int main(int argc, char *argv[]) {
     Application application;
 
     /* ============= Load application modules ============= */
+    application.addModule(new muse::GlobalModule());
     application.addModule(new muse::actions::ActionsModule());
     application.addModule(new muse::workspace::WorkspaceModule());
     application.addModule(new muse::accessibility::AccessibilityModule());
