@@ -45,18 +45,29 @@ std::shared_ptr<Application> Application::create(CmdOptions& options) {
 };
 
 void Application::initalizeModules() {
+    m_globalModule.registerResources();
     for (auto *m : _modules) {
         m->registerResources();
     };
 
+    m_globalModule.registerExports();
     for (auto *m : _modules) {
         m->registerExports();
     };
 
+    m_globalModule.registerUiTypes();
+    m_globalModule.resolveImports();
+    m_globalModule.registerApi();
     for (auto* m : _modules) {
         m->registerUiTypes();
         m->resolveImports();
         m->registerApi();
+    }
+
+    IApplication::RunMode runMode = IApplication::RunMode::GuiApp;
+    m_globalModule.onAllInited(runMode);
+    for (auto* m : _modules) {
+        m->onAllInited(runMode);
     }
 }
 
