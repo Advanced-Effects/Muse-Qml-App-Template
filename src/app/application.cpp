@@ -24,9 +24,6 @@ namespace app::app {
 Application::Application(const CmdOptions& options, const muse::modularity::ContextPtr& ctx)
     : muse::BaseApplication(ctx)
     , m_cmdOptions(options) {
-        // We load the GlobalModule first to get logging as quick as possible
-        // Order shouldn't matter for the rest of the modules
-        addModule(&m_globalModule);
     };
 
 void Application::addModule(muse::modularity::IModuleSetup *module) {
