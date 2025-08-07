@@ -4,7 +4,6 @@
 #include <QQmlApplicationEngine>
 #include <QApplication>
 
-#include "application.h"
 #include "commandlineparser.h"
 
 // Modules
@@ -22,39 +21,73 @@
 #include "workspace/workspacemodule.h"
 #include "appshell/appshellmodule.h"
 
+// Pull QQmlApplicationEngine
+#include "modularity/ioc.h"
+#include "ui/iuiengine.h"
+
 using namespace app::app;
 
+// Setup stuff.
+// Loads environment variables, Qt theme, etc. etc.
+void initialAppSetup() {
+
+};
+
+// With modules we load QML code and types.
+// .qrc files, C++ types, ...
+void loadApplicationModules(std::shared_ptr<Application> application) {
+    application->addModule(new muse::actions::ActionsModule());
+    application->addModule(new muse::workspace::WorkspaceModule());
+    application->addModule(new muse::accessibility::AccessibilityModule());
+    application->addModule(new muse::learn::LearnModule());
+    application->addModule(new muse::languages::LanguagesModule());
+    application->addModule(new mu::context::ContextModule());
+    application->addModule(new muse::ui::UiModule());
+    application->addModule(new muse::uicomponents::UiComponentsModule());
+    application->addModule(new muse::dock::DockModule());
+    application->addModule(new muse::shortcuts::ShortcutsModule());
+    application->addModule(new muse::network::NetworkModule());
+
+    application->addModule(new app::appshell::AppShellModule());
+};
+
+// We get the QQmlApplicationEngine from UiEngine.
+// because it injects the object 'ui' which we use to get
+// theme colors. See: `setContextProperty("ui", this)`
+QQmlApplicationEngine *pullApplicationEngine(std::shared_ptr<Application> app) {
+    std::shared_ptr<muse::ui::IUiEngine> uiEngine = app->ioc()->resolve<muse::ui::IUiEngine>("app");
+    if (!uiEngine) {
+        qWarning() << "UiEngine was not found. QQmlApplicationEngine cannot be pulled. in `main.cpp:pullApplicationEngine()`";
+        return nullptr;
+    }
+
+    return uiEngine->qmlAppEngine();
+};
+
 int main(int argc, char *argv[]) {
-    Application application;
+    initialAppSetup();
 
-    /* ============= Load application modules ============= */
-    application.addModule(new muse::GlobalModule());
-    application.addModule(new muse::actions::ActionsModule());
-    application.addModule(new muse::workspace::WorkspaceModule());
-    application.addModule(new muse::accessibility::AccessibilityModule());
-    application.addModule(new muse::learn::LearnModule());
-    application.addModule(new muse::languages::LanguagesModule());
-    application.addModule(new mu::context::ContextModule());
-    application.addModule(new muse::ui::UiModule());
-    application.addModule(new muse::uicomponents::UiComponentsModule());
-    application.addModule(new muse::dock::DockModule());
-    application.addModule(new muse::shortcuts::ShortcutsModule());
-    application.addModule(new muse::network::NetworkModule());
-    application.addModule(new app::appshell::AppShellModule());
-
+    QApplication *qApplication = new QApplication(argc, argv);
     /* ============= Initialize command line arguments ============= */
     CommandLineParser commandLineParser;
     commandLineParser.init();
     commandLineParser.parse(argc, argv);
+    commandLineParser.processBuiltinArgs(*qApplication);
+    CmdOptions options/* = commandLineParser.options()*/;
+
+    /* ============= First, load the Qt resources ============= */
+    auto application = Application::create(options);
+    loadApplicationModules(application);
 
     /* ============= Initialize Qt Application ============= */
-    QCoreApplication *qApplication = new QApplication(argc, argv);
-    QQmlApplicationEngine *qEngine = new QQmlApplicationEngine();
-    qEngine->addImportPath(":/qml");
+    QQmlApplicationEngine *engine = pullApplicationEngine(application);
+    if (!engine) {
+        return EXIT_FAILURE;
+    }
 
-    /* ============= Execute ============= */
-    return application.exec(*qApplication, commandLineParser, *qEngine);
+    application->perform();
+    return application->exec(*qApplication, commandLineParser, *engine);
 
+    application->finish();
     delete qApplication;
 };
-
