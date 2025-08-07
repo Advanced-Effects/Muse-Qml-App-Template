@@ -107,8 +107,6 @@ int Application::exec(
         QQmlApplicationEngine& engine) {
     // Include files from 'app.qrc'
     app_init_qrc();
-    // Initialize C++ QML types BEFORE loading the window!
-    initalizeModules();
 
     QQuickWindow *window = loadApplicationAndCreateWindow(engine);
     if (!window) return EXIT_FAILURE;
@@ -122,7 +120,11 @@ int Application::exec(
     deinitModules();
 };
 
-void Application::perform() {};
-void Application::finish() {};
+void Application::perform() {
+    initalizeModules();
+};
+void Application::finish() {
+    deinitModules();
+};
 
 };

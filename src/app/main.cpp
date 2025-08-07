@@ -55,7 +55,7 @@ void loadApplicationModules(std::shared_ptr<Application> application) {
 // because it injects the object 'ui' which we use to get
 // theme colors. See: `setContextProperty("ui", this)`
 QQmlApplicationEngine *pullApplicationEngine(std::shared_ptr<Application> app) {
-    std::shared_ptr<muse::ui::IUiEngine> uiEngine = app->ioc()->resolve<muse::ui::IUiEngine>("app");
+    std::shared_ptr<muse::ui::IUiEngine> uiEngine = app->ioc()->resolve<muse::ui::IUiEngine>("ui");
     if (!uiEngine) {
         qWarning() << "UiEngine was not found. QQmlApplicationEngine cannot be pulled. in `main.cpp:pullApplicationEngine()`";
         return nullptr;
@@ -78,6 +78,9 @@ int main(int argc, char *argv[]) {
     /* ============= First, load the Qt resources ============= */
     auto application = Application::create(options);
     loadApplicationModules(application);
+    // Load modules BEFORE pulling QmlAppEngine!
+    // (uimodule.cpp creates and registers IUiEngine)
+    application->perform();
 
     /* ============= Initialize Qt Application ============= */
     QQmlApplicationEngine *engine = pullApplicationEngine(application);
@@ -85,7 +88,6 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    application->perform();
     return application->exec(*qApplication, commandLineParser, *engine);
 
     application->finish();
