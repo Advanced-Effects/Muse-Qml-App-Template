@@ -79,7 +79,6 @@ set(LINK_LIB
     muse::learn
     muse::languages
     muse::diagnostics
-    muse::audioplugins
 
     app::context
     app::appshell
@@ -124,7 +123,7 @@ target_include_directories(app PRIVATE
 ###########################################
 
 if (APP_OUTPUT_NAME)
-  set_target_properties(${EXECUTABLE_NAME} PROPERTIES OUTPUT_NAME ${APP_OUTPUT_NAME})
+    set_target_properties(${EXECUTABLE_NAME} PROPERTIES OUTPUT_NAME ${APP_OUTPUT_NAME})
 endif (APP_OUTPUT_NAME)
 
 if (MUSE_ENABLE_UNIT_TESTS_CODE_COVERAGE)
@@ -289,22 +288,22 @@ if (OS_IS_WIN)
         )
     endif()
 
-###########################################
-# Linux
-###########################################
+    ###########################################
+    # Linux
+    ###########################################
 elseif(OS_IS_LIN)
 
     install(TARGETS ${EXECUTABLE_NAME} RUNTIME DESTINATION bin)
 
 elseif(OS_IS_FBSD)
-###########################################
-# FreeBSD
-###########################################
+    ###########################################
+    # FreeBSD
+    ###########################################
 
 
-###########################################
-# MacOS
-###########################################
+    ###########################################
+    # MacOS
+    ###########################################
 elseif(OS_IS_MAC)
 
     install(TARGETS app BUNDLE DESTINATION ${CMAKE_INSTALL_PREFIX})
@@ -321,9 +320,9 @@ elseif(OS_IS_MAC)
                 REGEX ".*_debug\\.dylib" EXCLUDE)
     endif()
 
-###########################################
-# Wasm
-###########################################
+    ###########################################
+    # Wasm
+    ###########################################
 elseif(OS_IS_WASM)
 
 else()
@@ -336,8 +335,8 @@ endif()
 #################################################
 if (MSVC)
 
-   # Force the "install" and "package" targets not to depend on the "all" target.
-   set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY true)
-   set(CMAKE_SKIP_PACKAGE_ALL_DEPENDENCY true)
+    # Force the "install" and "package" targets not to depend on the "all" target.
+    set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY true)
+    set(CMAKE_SKIP_PACKAGE_ALL_DEPENDENCY true)
 
 endif (MSVC)
