@@ -37,6 +37,8 @@ public:
 
     void perform() override;
     void finish() override;
+    void initalizeModules();
+    void deinitModules();
 
 private:
     //! NOTE Separately to initialize logger and profiler as early as possible
@@ -45,8 +47,6 @@ private:
 
     CmdOptions m_cmdOptions;
 
-    void initalizeModules();
-    void deinitModules();
 };
 
 };

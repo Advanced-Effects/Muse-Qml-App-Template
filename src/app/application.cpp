@@ -9,6 +9,11 @@
 #include <QString>
 #include <QUrl>
 
+// tell our modules when application loads (initializeModules)
+#include <QApplication>
+#include <QMetaObject>
+
+#include "commandlineparser.h"
 #include "ui/internal/uiengine.h"
 
 // Links this application with app.qrc
@@ -62,10 +67,30 @@ void Application::initalizeModules() {
     }
 
     IApplication::RunMode runMode = IApplication::RunMode::GuiApp;
+    m_globalModule.onPreInit(runMode);
+    for (auto *m : _modules) {
+        m->onPreInit(runMode);
+    }
+
+    m_globalModule.onInit(runMode);
+    for (auto *m : _modules) {
+        m->onInit(runMode);
+    }
+
     m_globalModule.onAllInited(runMode);
-    for (auto* m : _modules) {
+    for (auto *m : _modules) {
         m->onAllInited(runMode);
     }
+
+    // When Qt application starts,
+    // (where qApp is a global reference to the QApplication. No need to pass references around)
+    QMetaObject::invokeMethod(qApp, [this]() {
+        m_globalModule.onStartApp();
+        for (auto *m : _modules) {
+            m->onStartApp(); // tell our modules so
+        }
+    }, Qt::QueuedConnection);
+
 }
 
 void Application::deinitModules() {
@@ -128,11 +153,7 @@ int Application::exec(
     deinitModules();
 };
 
-void Application::perform() {
-    initalizeModules();
-};
-void Application::finish() {
-    deinitModules();
-};
+void Application::perform() {};
+void Application::finish() {};
 
 };

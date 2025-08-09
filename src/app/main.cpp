@@ -8,6 +8,8 @@
 
 // Modules
 #include "global/globalmodule.h"
+#include "diagnostics/diagnosticsmodule.h"
+#include "extensions/extensionsmodule.h"
 #include "actions/actionsmodule.h"
 #include "context/contextmodule.h"
 #include "ui/uimodule.h"
@@ -36,6 +38,7 @@ void initialAppSetup() {
 // With modules we load QML code and types.
 // .qrc files, C++ types, ...
 void loadApplicationModules(std::shared_ptr<Application> application) {
+    application->addModule(new muse::diagnostics::DiagnosticsModule());
     application->addModule(new muse::actions::ActionsModule());
     application->addModule(new muse::workspace::WorkspaceModule());
     application->addModule(new muse::accessibility::AccessibilityModule());
@@ -77,10 +80,12 @@ int main(int argc, char *argv[]) {
 
     /* ============= First, load the Qt resources ============= */
     auto application = Application::create(options);
+    // Add modules to application
     loadApplicationModules(application);
-    // Load modules BEFORE pulling QmlAppEngine!
+    // Load the modules BEFORE pulling QmlAppEngine!
     // (uimodule.cpp creates and registers IUiEngine)
-    application->perform();
+    application->initalizeModules();
+    application->perform(); //idk what this does
 
     /* ============= Initialize Qt Application ============= */
     QQmlApplicationEngine *engine = pullApplicationEngine(application);
@@ -90,6 +95,7 @@ int main(int argc, char *argv[]) {
 
     return application->exec(*qApplication, commandLineParser, *engine);
 
-    application->finish();
+    application->deinitModules();
+    application->finish(); //idk what this does
     delete qApplication;
 };
