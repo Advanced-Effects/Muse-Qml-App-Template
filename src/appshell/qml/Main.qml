@@ -2,6 +2,8 @@ import QtQuick 2.15
 
 import Muse.UiComponents 1.0
 
+import "./TitleBar"
+
 AppWindow {
     id: root
 
@@ -13,7 +15,7 @@ AppWindow {
         }
     }
 
-    /*AppTitlebar {
+    AppTitlebar {
         id: appTitleBar
 
         anchors.top: parent.top
@@ -34,15 +36,14 @@ AppWindow {
         onCloseWindowRequested: {
             root.close()
         }
-    }*/
+    }
 
     WindowContent {
         id: window
 
-        anchors.top: /*appTitlebar*/parent.bottom
+        anchors.top: appTitlebar.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
     }
 }
-
