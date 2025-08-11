@@ -71,7 +71,7 @@ set(MUSE_MODULE_LANGUAGES ON)
 set(MUSE_MODULE_LEARN ON)
 set(MUSE_MODULE_MIDI OFF)
 set(MUSE_MODULE_MPE OFF)
-set(MUSE_MODULE_MULTIINSTANCES OFF)
+set(MUSE_MODULE_MULTIINSTANCES ON)
 set(MUSE_MODULE_MUSESAMPLER OFF)
 set(MUSE_MODULE_NETWORK ON)
 set(MUSE_MODULE_SHORTCUTS ON)
@@ -107,9 +107,9 @@ set(QT_QPROCESS_SUPPORTED ON)
 # "SetupConfigure" sets useful CMake variables such as: MUSE_APP_INSTALL_PREFIX, etc.
 
 if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/SetupConfigure.local.cmake")
-    include(${CMAKE_CURRENT_LIST_DIR}/SetupConfigure.local.cmake)
+        include(${CMAKE_CURRENT_LIST_DIR}/SetupConfigure.local.cmake)
 else()
-    include(SetupConfigure)
+        include(SetupConfigure)
 endif()
 
 ###########################################
@@ -119,7 +119,7 @@ endif()
 include(SetupBuildEnvironment)
 include(GetPlatformInfo)
 if (MUE_COMPILE_USE_CCACHE)
-    include(TryUseCcache)
+        include(TryUseCcache)
 endif(MUE_COMPILE_USE_CCACHE)
 
 
@@ -133,8 +133,8 @@ include(SetupQt6)
 # Add source tree
 ###########################################
 if (MUSE_ENABLE_UNIT_TESTS)
-    enable_testing()
-    message(STATUS "Enabled testing")
+        enable_testing()
+        message(STATUS "Enabled testing")
 endif()
 
 add_subdirectory(share)
@@ -142,13 +142,13 @@ add_subdirectory(${MUSE_FRAMEWORK_SRC_PATH})
 add_subdirectory(src)
 
 if (MSVC)
-    # Now that the `app` target is defined, we can set it as the startup project in Visual Studio.
-    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT app)
+        # Now that the `app` target is defined, we can set it as the startup project in Visual Studio.
+        set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT app)
 endif()
 
 ###########################################
 # Setup Packaging
 ###########################################
 if (OS_IS_LIN)
-    include(${CMAKE_CURRENT_LIST_DIR}/buildscripts/packaging/Linux+BSD/SetupAppImagePackaging.cmake)
+        include(${CMAKE_CURRENT_LIST_DIR}/buildscripts/packaging/Linux+BSD/SetupAppImagePackaging.cmake)
 endif(OS_IS_LIN)

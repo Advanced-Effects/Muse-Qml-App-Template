@@ -9,6 +9,7 @@
 // Modules
 #include "global/globalmodule.h"
 #include "diagnostics/diagnosticsmodule.h"
+#include "multiinstances/multiinstancesmodule.h"
 #include "extensions/extensionsmodule.h"
 #include "actions/actionsmodule.h"
 #include "context/contextmodule.h"
@@ -40,6 +41,7 @@ void initialAppSetup() {
 void loadApplicationModules(std::shared_ptr<Application> application) {
     application->addModule(new muse::diagnostics::DiagnosticsModule());
     application->addModule(new muse::actions::ActionsModule());
+    application->addModule(new muse::mi::MultiInstancesModule());
     application->addModule(new muse::workspace::WorkspaceModule());
     application->addModule(new muse::accessibility::AccessibilityModule());
     application->addModule(new muse::learn::LearnModule());
