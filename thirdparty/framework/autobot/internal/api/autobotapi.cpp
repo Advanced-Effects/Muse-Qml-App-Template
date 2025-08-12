@@ -119,8 +119,7 @@ bool AutobotApi::openProject(const QString& name)
         }
     }
 
-    Ret ret = projectFilesController()->openProject(filePath);
-    return ret;
+    return false;
 }
 
 void AutobotApi::saveProject(const QString& name)
@@ -132,7 +131,6 @@ void AutobotApi::saveProject(const QString& name)
     }
 
     io::path_t filePath = dir + "/" + QDateTime::currentDateTime().toString("yyMMddhhmmss") + "_" + name;
-    projectFilesController()->saveProject(filePath);
 }
 
 void AutobotApi::sleep(int msec)
