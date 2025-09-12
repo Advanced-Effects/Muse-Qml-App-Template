@@ -43,10 +43,17 @@ DO read-through these. Print if necessary. They will make development faster.
 ## Dependencies & how to run
 
 **1. Clone the repository:** `git clone https://github.com/Advanced-Effects/Muse-Qml-App-Template` or Download it as a zip from github's UI.
+
 **2. Setup build environment:** You will need a C++17 compiler like `gcc`, `CMake`, `Ninja`, and `Qt6`.
+
 **3. Get the dependencies:** Get the [Muse framework dependencies](https://github.com/musescore/MuseScore/wiki/Install-dependencies), OpenGL and `glfw3`.
+
 **4. Build the project:**
-    - Open the terminal, go into the project's location using `cd /Your/Project/location`.
-    - Create a `build` directory using `mkdir build` and go into it `cd build`
-    - Setup CMake `cmake ..`
-    - Compile the project `cmake --build . -j<CPU CORES>`
+
+  - Open the terminal, go into the project's location using `cd /Your/Project/location`.
+
+  - Create a `build` directory using `mkdir build` and go into it `cd build`
+    
+  - Setup CMake `cmake ..`
+    
+  - Compile the project `cmake --build . -j<CPU CORES>`
