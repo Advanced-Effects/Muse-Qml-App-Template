@@ -1,10 +1,22 @@
 # Muse App Template
 
-A template application that integrates Muse's UI framework.
+When the MuseScore team decided to rewrite their entire UI to make it more modern, they rewritten it from Qt Widgets to a framework called QtQuick (or QML). This framework gives you more control over how the UI looks, with the contraposition that it's harder to make a UI that feels native to desktop.
 
-So, you came here because you want to develop an **open-source GPL-3.0** app that looks and feels good.
+So, since they planned on writing a desktop UI, they developed a set of components, UI components. These components are inside [MuseScore's framework]().
+
+So, you want to write an application that feels modern? You don't need to write your own set of components, you can just use MuseScore's components!
+
+## How we use MuseScore's framework
+
+We do it the same way MuseScore or Audacity does. We download the [Muse framework](https://github.com/musescore/MuseScore/tree/master/src/framework) folder and add it to our application.
+
+We then create a [usual Qt QML application](https://doc.qt.io/qt-6/qmlfirststeps.html), and load the framework's modules using the abstraction of `IModuleSetup` (more on that later).
+
+Finally, in the UI code, we use MuseScore's widgets like `DockWindow`.
 
 ## Warning
+
+If you want to **use Muse's components**, you **are required to make your app open source.** 
 
 > This application is licensed under GPL-3.0. That means you **can technically profit** from this app, but you **must redistribute your changes** to this app **publicly** under the **same license** (GPL3). This application was built thanks to dozens of people that prefered to keep the source open to everyone :) (MuseScore, Friction, Glaxnimate...)
 
@@ -17,6 +29,8 @@ So, you came here because you want to develop an **open-source GPL-3.0** app tha
 
 ## Recommended lectures
 
+We use a set of technologies. Understanding them will make working with this a lot, lot easier. It took me +3 months to finish this and make something compilable, but hopefully it's going to take you a lot less with the documentation I'm writing.
+
 DO read-through these. Print if necessary. They will make development faster.
 
 - [C++ W3Schools.](https://www.w3schools.com/cpp/default.asp)
@@ -26,27 +40,13 @@ DO read-through these. Print if necessary. They will make development faster.
 - QML Module system: https://doc.qt.io/qt-6/qtqml-modules-topic.html
 - QML State system: https://doc.qt.io/qt-6/qtquick-statesanimations-topic.html
 
-**PROJECT IS IN CONSTRUCTION.** I want to build the best documentation possible, so if you have any questions at all about how to build this project or you're getting errors, contact me via GitHub issues or Discord: https://discord.gg/xbcecPfne6
-
 ## Dependencies & how to run
 
-- Build system
-  - C++17 compiler
-  - CMake
-  - Ninja
-- Qt 6.9 (How to install?)
-  - Core
-  - Widgets
-  - QML
-  - QtQuick2
-  - QtQuick2Controls
-  - QtWebEngine
-  - QtNetworkAuthAccess
-- Muse framework dependencies
-
-```
-git clone https://github.com/kaixoo13/Muse-App-Template.git
-mkdir build && cd build
-cmake .. -DCMAKE_PREFIX_PATH= -DKORS_LOGGER_ENABLED=ON
-cmake --build . -j4
-```
+**1. Clone the repository:** `git clone https://github.com/Advanced-Effects/Muse-Qml-App-Template` or Download it as a zip from github's UI.
+**2. Setup build environment:** You will need a C++17 compiler like `gcc`, `CMake`, `Ninja`, and `Qt6`.
+**3. Get the dependencies:** Get the [Muse framework dependencies](https://github.com/musescore/MuseScore/wiki/Install-dependencies), OpenGL and `glfw3`.
+**4. Build the project:**
+    - Open the terminal, go into the project's location using `cd /Your/Project/location`.
+    - Create a `build` directory using `mkdir build` and go into it `cd build`
+    - Setup CMake `cmake ..`
+    - Compile the project `cmake --build . -j<CPU CORES>`
