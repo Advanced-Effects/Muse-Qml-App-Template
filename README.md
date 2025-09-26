@@ -1,6 +1,6 @@
 # Muse App Template
 
-[![Advanced Effects screenshot.](https://raw.githubusercontent.com/Advanced-Effects/Muse-Qml-App-Template/refs/heads/main/screenshot.webp)]
+![Advanced Effects screenshot.](https://raw.githubusercontent.com/Advanced-Effects/Muse-Qml-App-Template/refs/heads/main/screenshot.webp)
 
 *A screenshot of Advanced Effects, my own application based on this template, with a Menu and a Canvas.*
 
