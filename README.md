@@ -1,5 +1,9 @@
 # Muse App Template
 
+[![Advanced Effects screenshot.](https://raw.githubusercontent.com/Advanced-Effects/Muse-Qml-App-Template/refs/heads/main/screenshot.webp)]
+
+*A screenshot of Advanced Effects, my own application based on this template, with a Menu and a Canvas.*
+
 When the MuseScore team decided to rewrite their entire UI to make it more modern, they rewritten it from Qt Widgets to a framework called QtQuick (or QML). This framework gives you more control over how the UI looks, with the contraposition that it's harder to make a UI that feels native to desktop.
 
 So, since they planned on writing a desktop UI, they developed a set of components, UI components. These components are inside [MuseScore's framework]().
